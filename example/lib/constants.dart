@@ -1,4 +1,5 @@
 class Constants {
+  static const String testUrl = "ftp://a.gbl.114s.com:20320/2915/%E6%89%AB%E9%BB%91·%E5%86%B3%E6%88%98-2021_HD%E5%9B%BD%E8%AF%AD%E4%B8%AD%E5%AD%97.mp4";
   static const String bugBuckBunnyVideoUrl =
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
   static const String forBiggerBlazesUrl =
