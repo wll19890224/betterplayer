@@ -1,5 +1,5 @@
 class Constants {
-  static const String testUrl = "ftp://a.gbl.114s.com:20320/2915/%E6%89%AB%E9%BB%91·%E5%86%B3%E6%88%98-2021_HD%E5%9B%BD%E8%AF%AD%E4%B8%AD%E5%AD%97.mp4";
+  static const String testUrl = "https://hss10.dnvodcdn.me/ppot/_definst_/mp4:s13/lvod/lxj-lyz-01-02903282A927t.mp4/chunklist.m3u8?dnvodendtime=1684482014&dnvodhash=zQ_aFMxsuXW1XDeWuoyJk98meW5LiJLjbMNQNs6mq2o=&dnvodCustomParameter=0_61.53.205.59.CN&lb=ec6f04bd674e3d6b7a1849a6471847e8";
   static const String bugBuckBunnyVideoUrl =
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
   static const String forBiggerBlazesUrl =

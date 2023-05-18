@@ -442,6 +442,17 @@ class BetterPlayerController {
   Future _setupDataSource(BetterPlayerDataSource betterPlayerDataSource) async {
     switch (betterPlayerDataSource.type) {
       case BetterPlayerDataSourceType.network:
+        BetterPlayerUtils.log("_setupDataSource--- " + betterPlayerDataSource.url);
+        /// 检测 m3u8播放地址，填充至 videoFormat
+        var isM3u8 = BetterPlayerUtils.isM3U8Url(betterPlayerDataSource.url);
+        BetterPlayerUtils.log("播放链接---" + isM3u8.toString() + "| " + betterPlayerDataSource.url);
+        VideoFormat? videoFormat;
+        if(isM3u8) {
+          BetterPlayerUtils.log("设置播放格式为hls---");
+          videoFormat = _getVideoFormat(BetterPlayerVideoFormat.hls);
+        } else {
+          videoFormat = _getVideoFormat(_betterPlayerDataSource!.videoFormat);
+        }
         await videoPlayerController?.setNetworkDataSource(
           betterPlayerDataSource.url,
           headers: _getHeaders(),
@@ -462,7 +473,7 @@ class BetterPlayerController {
           notificationChannelName: _betterPlayerDataSource
               ?.notificationConfiguration?.notificationChannelName,
           overriddenDuration: _betterPlayerDataSource!.overriddenDuration,
-          formatHint: _getVideoFormat(_betterPlayerDataSource!.videoFormat),
+          formatHint: videoFormat,
           licenseUrl: _betterPlayerDataSource?.drmConfiguration?.licenseUrl,
           certificateUrl:
               _betterPlayerDataSource?.drmConfiguration?.certificateUrl,

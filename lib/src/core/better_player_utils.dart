@@ -62,4 +62,28 @@ class BetterPlayerUtils {
       print(logMessage);
     }
   }
+
+  /**
+   * 判断url是否是m3u8链接
+   */
+  static bool isM3U8Url(String url) {
+    if (url == null || url.isEmpty) {
+      return false;
+    }
+
+    // 判断URL是否以.m3u8结尾
+    if (url.endsWith('.m3u8')) {
+      return true;
+    }
+
+    // 如果URL中包含.m3u8并且不在末尾，则可能是一个带有查询参数的链接，需要进一步验证
+    final uri = Uri.parse(url);
+    if (uri.pathSegments.isNotEmpty) {
+      final lastSegment = uri.pathSegments.last;
+      if (lastSegment.toLowerCase().contains('.m3u8')) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -365,7 +365,7 @@ class _BetterPlayerMaterialControlsState
     return Container(
       child: Center(
         child: AnimatedOpacity(
-          opacity: controlsNotVisible ? 0.0 : 1.0,
+          opacity: controlsNotVisible ? 0.0 : 0.7,
           duration: _controlsConfiguration.controlsHideTime,
           child: _buildMiddleRow(),
         ),
