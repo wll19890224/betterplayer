@@ -1,4 +1,5 @@
 import 'package:better_player/better_player.dart';
+import 'package:better_player_example/api/api_limited_video_config.dart';
 import 'package:better_player_example/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -43,13 +44,18 @@ class _HlsSubtitlesPageState extends State<HlsSubtitlesPage> {
     BetterPlayerConfiguration betterPlayerConfiguration =
         BetterPlayerConfiguration(
             controlsConfiguration: controlsConfiguration,
+            autoPlay: true,
             aspectRatio: 16 / 9,
+            apiLimitedConfigBase: ApiLimitedConfig(),
             fit: BoxFit.contain,
+            looping: false,
             subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
               fontSize: 16.0,
             ));
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network, Constants.hlsPlaylistUrl,
+        BetterPlayerDataSourceType.network,
+        Constants.hlsPlaylistUrl,
+        // overriddenDuration: const Duration(seconds: 10),
         useAsmsSubtitles: true);
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
     _betterPlayerController.setupDataSource(dataSource);

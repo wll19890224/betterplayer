@@ -7,7 +7,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-///Base class for both material and cupertino controls
+/// 播放器控制基础入口
 abstract class BetterPlayerControlsState<T extends StatefulWidget>
     extends State<T> {
   ///Min. time of buffered video to hide loading timer (in milliseconds)
@@ -22,6 +22,15 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
   bool controlsNotVisible = true;
 
   void cancelAndRestartTimer();
+
+  /// 是否为限制最长播放时间模式
+  bool isLimitDurationMode() {
+    final configuration = betterPlayerController?.betterPlayerConfiguration;
+    final limitedConfig = configuration?.apiLimitedConfigBase;
+    return limitedConfig != null &&
+        limitedConfig.isLimitedMode() &&
+        limitedConfig.getLimitedSeconds() > -1;
+  }
 
   bool isVideoFinished(VideoPlayerValue? videoPlayerValue) {
     return videoPlayerValue?.position != null &&

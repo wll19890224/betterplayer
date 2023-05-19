@@ -1,6 +1,9 @@
 import 'package:better_player/better_player.dart';
+import 'package:better_player/src/api/default_api_limited_video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../api/api_limited_video.dart';
 
 ///Configuration of Better Player. Allows to setup general behavior of player.
 ///Master configuration which contains children that configure specific part
@@ -118,6 +121,11 @@ class BetterPlayerConfiguration {
   ///Default value is false.
   final bool useRootNavigator;
 
+  // /// 是否需要设置限制时长。非-1的情况，即当Duration覆盖成设置的秒数
+  // final int limitDuration;
+
+  final ApiLimitedConfigBase apiLimitedConfigBase;
+
   const BetterPlayerConfiguration({
     this.aspectRatio,
     this.autoPlay = false,
@@ -129,7 +137,7 @@ class BetterPlayerConfiguration {
     this.placeholderOnTop = true,
     this.overlay,
     this.errorBuilder,
-    this.allowedScreenSleep = true,
+    this.allowedScreenSleep = false,
     this.fullScreenAspectRatio,
     this.deviceOrientationsOnFullScreen = const [
       DeviceOrientation.landscapeLeft,
@@ -156,6 +164,7 @@ class BetterPlayerConfiguration {
     this.autoDispose = true,
     this.expandToFill = true,
     this.useRootNavigator = false,
+    this.apiLimitedConfigBase = const DefaultApiLimitedConfig(),
   });
 
   BetterPlayerConfiguration copyWith({
@@ -188,6 +197,7 @@ class BetterPlayerConfiguration {
     bool? autoDispose,
     bool? expandToFill,
     bool? useRootNavigator,
+    ApiLimitedConfigBase? limitedConfigBase,
   }) {
     return BetterPlayerConfiguration(
       aspectRatio: aspectRatio ?? this.aspectRatio,
@@ -228,6 +238,13 @@ class BetterPlayerConfiguration {
       autoDispose: autoDispose ?? this.autoDispose,
       expandToFill: expandToFill ?? this.expandToFill,
       useRootNavigator: useRootNavigator ?? this.useRootNavigator,
+      apiLimitedConfigBase: limitedConfigBase ?? this.apiLimitedConfigBase,
     );
+  }
+
+  /// 是否为限制最长播放时间模式
+  bool isLimitDurationMode() {
+    return apiLimitedConfigBase.isLimitedMode() &&
+        apiLimitedConfigBase.getLimitedSeconds() > -1;
   }
 }

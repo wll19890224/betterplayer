@@ -233,7 +233,17 @@ class BetterPlayerController {
   }
 
   ///Setup new data source in Better Player.
-  Future setupDataSource(BetterPlayerDataSource betterPlayerDataSource) async {
+  Future setupDataSource(BetterPlayerDataSource dataSource) async {
+    /// check isLimitedMode
+    bool isLimitedMode = betterPlayerConfiguration.isLimitDurationMode();
+    late BetterPlayerDataSource betterPlayerDataSource;
+    if(isLimitedMode) {
+      BetterPlayerUtils.log("受限模式开启--" + betterPlayerConfiguration.apiLimitedConfigBase.getLimitedSeconds().toString());
+      betterPlayerDataSource = dataSource.copyWith(overriddenDuration: new Duration(seconds: betterPlayerConfiguration.apiLimitedConfigBase.getLimitedSeconds()));
+    } else {
+      BetterPlayerUtils.log("受限模式未开启--" + betterPlayerConfiguration.apiLimitedConfigBase.getLimitedSeconds().toString());
+      betterPlayerDataSource = dataSource.copyWith();
+    }
     postEvent(BetterPlayerEvent(BetterPlayerEventType.setupDataSource,
         parameters: <String, dynamic>{
           _dataSourceParameter: betterPlayerDataSource,
@@ -425,6 +435,7 @@ class BetterPlayerController {
       BetterPlayerVideoFormat? betterPlayerVideoFormat) {
     if (betterPlayerVideoFormat == null) {
       return null;
+      // return VideoFormat.dash;
     }
     switch (betterPlayerVideoFormat) {
       case BetterPlayerVideoFormat.dash:
@@ -451,6 +462,7 @@ class BetterPlayerController {
           BetterPlayerUtils.log("设置播放格式为hls---");
           videoFormat = _getVideoFormat(BetterPlayerVideoFormat.hls);
         } else {
+          BetterPlayerUtils.log("设置播放格式为其他格式");
           videoFormat = _getVideoFormat(_betterPlayerDataSource!.videoFormat);
         }
         await videoPlayerController?.setNetworkDataSource(

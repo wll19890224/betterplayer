@@ -8,6 +8,7 @@ import 'package:better_player/src/controls/better_player_progress_colors.dart';
 import 'package:better_player/src/core/better_player_controller.dart';
 import 'package:better_player/src/core/better_player_utils.dart';
 import 'package:better_player/src/video_player/video_player.dart';
+import 'package:flutter/material.dart';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -361,6 +362,13 @@ class _BetterPlayerMaterialControlsState
   Widget _buildHitArea() {
     if (!betterPlayerController!.controlsEnabled) {
       return const SizedBox();
+    }
+    final bool isFinished = isVideoFinished(_latestValue);
+    final bool isLimitMode = isLimitDurationMode();
+    if (isLimitMode && isFinished) {
+      changePlayerControlsNotVisible(true);
+      _hideTimer?.cancel();
+      return betterPlayerController!.betterPlayerConfiguration.apiLimitedConfigBase.getLimitedLayout();
     }
     return Container(
       child: Center(

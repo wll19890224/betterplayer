@@ -25,4 +25,6 @@ enum BetterPlayerEventType {
   bufferingUpdate,
   bufferingEnd,
   changedPlaylistItem,
+  /// 是否显示需要解锁画面
+  lockDurationVisible,
 }
