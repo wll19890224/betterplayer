@@ -8,6 +8,8 @@ import '../api/api_limited_video.dart';
 ///Configuration of Better Player. Allows to setup general behavior of player.
 ///Master configuration which contains children that configure specific part
 ///of player.
+
+typedef LimitedVideoCallback<T> = void Function(T model, int index);
 class BetterPlayerConfiguration {
   /// Play the video as soon as it's displayed
   final bool autoPlay;
